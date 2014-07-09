@@ -1,9 +1,13 @@
 package com.xmap;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -32,27 +36,31 @@ public class MapsActivity extends FragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        createMenu(menu);
-        return true;
+        getMenuInflater().inflate(R.menu.my, menu);
+        return super.onCreateOptionsMenu(menu);
+        //createMenu(menu);
+        //return true;
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
-            case 0:
+        int itemId = item.getItemId();
+        switch(itemId){
+            case R.id.normalMenu:
                 mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 break;
-            case 1:
+            case R.id.satelliteMenu:
                 mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
                 break;
-            case 2:
+            case R.id.terrainMenu:
                 mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
                 break;
-            case 3:
+            case R.id.hybridMenu:
                 mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 break;
         }
+
         return true;
     }
 
@@ -107,33 +115,37 @@ public class MapsActivity extends FragmentActivity {
 
         CameraPosition cameraPosition = new CameraPosition
                                             .Builder()
-                                            .target(latlng).zoom(1).build();
+                                            .target(latlng).zoom(10).build();
 
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         mMap.addMarker(markerOption);
     }
 
     private void createMenu(Menu menu) {
-        MenuItem m1 = menu.add(0, 0, 0, "Normal");
-        {
-            m1.setIcon(R.drawable.ic_action_map);
-            m1.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        }
-        MenuItem m2 = menu.add(0, 1, 1, "Satellite");
-        {
-            m2.setIcon(R.drawable.ic_action_map);
-            m2.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        }
-        MenuItem m3 = menu.add(0, 2, 2, "Terrain");
-        {
-            m3.setIcon(R.drawable.ic_action_map);
-            m3.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        }
 
-        MenuItem m4 = menu.add(0, 3, 3, "Hybrid");
-        {
-            m4.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        }
+        //menu.add(1, 1, 0, "one").setIcon(R.drawable.abc_ic_search);
+        //menu.add(1, 2, 1, "two").setIcon(R.drawable.abc_ic_clear);
+
+//        MenuItem m1 = menu.add(0, 0, 0, "Normal");
+//        {
+//            m1.setIcon(R.drawable.ic_menu_moreoverflow);
+//            m1.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+//        }
+//        MenuItem m2 = menu.add(0, 1, 1, "Satellite");
+//        {
+//            m2.setIcon(R.drawable.ic_action_map);
+//            m2.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+//        }
+//        MenuItem m3 = menu.add(0, 2, 2, "Terrain");
+//        {
+//            m3.setIcon(R.drawable.ic_action_map);
+//            m3.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+//        }
+//
+//        MenuItem m4 = menu.add(0, 3, 3, "Hybrid");
+//        {
+//            m4.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+//        }
 
     }
 }
